@@ -1,0 +1,24 @@
+### DOCKERFILE
+version: "2.29.07"
+services:
+  bookstore-database-postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    networks:
+      - bookstore-network
+  bookstore-api-java:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - bookstore-network
+
+networks:
+  bookstore-network:
+    driver: bridge
+
