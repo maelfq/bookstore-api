@@ -1,0 +1,18 @@
+server:
+  servlet:
+    context-path: /bookstore
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bookstore
+    username: postgres
+    password: password
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  application:
+    name: bookstore-api-java
+springdoc:
+  swagger-ui:
+    path=/swagger-ui.html
