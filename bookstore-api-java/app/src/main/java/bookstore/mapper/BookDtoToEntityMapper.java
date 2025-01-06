@@ -9,6 +9,7 @@ public class BookDtoToEntityMapper {
         bookEntity.setAuthor(bookDto.getAuthor());
         bookEntity.setTitle(bookDto.getTitle());
         bookEntity.setGenre(bookDto.getGenre());
+        bookEntity.setAvailable(bookDto.getAvailable());
         return bookEntity;
     }
 }

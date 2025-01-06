@@ -35,7 +35,7 @@ public class CsvItemToBookDtoMapper {
         setBookTitleProperty(columns, valuesArray, bookDto);
         setBookAuthorProperty(columns, valuesArray, bookDto);
         setBookGenreProperty(columns, valuesArray, bookDto);
-
+        bookDto.setAvailable(Boolean.TRUE);
         return bookDto;
     }
 

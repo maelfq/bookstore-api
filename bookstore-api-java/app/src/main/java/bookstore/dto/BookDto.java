@@ -5,6 +5,7 @@ public class BookDto {
     private String title;
     private String author;
     private String genre;
+    private Boolean isAvailable;
 
     public String getTitle() {
         return title;
@@ -36,5 +37,13 @@ public class BookDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
     }
 }
