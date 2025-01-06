@@ -4,12 +4,8 @@
   - create a new database
   - load the dataset -> https://www.kaggle.com/datasets/drahulsingh/best-selling-books?select=best-selling-books.csv
 - launch API
-  - create the controllers
-  - create the repositories
-  - link controllers to repositories
-  - develop unit test alongside
 - launch front-end
-- create the docker-compose to get everything managed
+- create the docker-compose eventually to run in production mode
 
 # TODO 2024/10/10
 - Dockerfile java

@@ -9,14 +9,14 @@ services:
       - 5432:5432
     networks:
       - bookstore-network
-  bookstore-api-java:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - bookstore-network
+#  bookstore-api-java:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - bookstore-network
 
 networks:
   bookstore-network:
