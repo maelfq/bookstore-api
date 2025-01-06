@@ -1,5 +1,4 @@
 ### DOCKERFILE
-version: "2.29.07"
 services:
   bookstore-database-postgres:
     image: postgres

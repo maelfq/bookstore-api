@@ -8,9 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/bookstore/admin/load-dataset")
 public class LoadDatasetController {
+
+    private final LoadDatasetService loadDatasetService;
+
+    public LoadDatasetController(LoadDatasetService loadDatasetService) {
+        this.loadDatasetService = loadDatasetService;
+    }
+
     @GetMapping
     public boolean LoadDataSet() {
-        boolean result = LoadDatasetService.execute();
+        boolean result = loadDatasetService.execute();
         return result;
     }
 }
