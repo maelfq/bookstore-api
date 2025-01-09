@@ -7,11 +7,12 @@
 - launch front-end
 - create the docker-compose eventually to run in production mode
 
-# TODO 2024/10/10
+# TODO 2025/01/07
 - Dockerfile java
   - check how to compile with custom output name for .jar
 - test docker-compose.yaml
 - make custom Dockerfile for database
   - create bookstore schema
-  - load Kaggle dataset with API -> 
-- commit online
+- API
+  - CRUD customer controllers
+  - Link physical book to book

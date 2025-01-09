@@ -6,11 +6,10 @@ import jakarta.persistence.*;
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long bookId;
     private String title;
     private String author;
     private String genre;
-    private Boolean isAvailable;
 
     public String getTitle() {
         return title;
@@ -36,19 +35,12 @@ public class BookEntity {
         this.genre = genre;
     }
 
-    public long getId() {
-        return id;
+    public long getBookId() {
+        return bookId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
-    public Boolean getAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(Boolean available) {
-        isAvailable = available;
-    }
 }

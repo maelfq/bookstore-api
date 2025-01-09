@@ -21,7 +21,6 @@ public class CsvItemToBookDtoMapper {
 
         BookDto bookDto = new BookDto();
 
-        //FIXME: genre is often the missing column
         if(columns.length != valuesArray.size()) {
             // condition met when the genre is missing from dataset
             if(valuesArray.size() == (columns.length - 1)) {
@@ -35,7 +34,6 @@ public class CsvItemToBookDtoMapper {
         setBookTitleProperty(columns, valuesArray, bookDto);
         setBookAuthorProperty(columns, valuesArray, bookDto);
         setBookGenreProperty(columns, valuesArray, bookDto);
-        bookDto.setAvailable(Boolean.TRUE);
         return bookDto;
     }
 

@@ -1,11 +1,10 @@
 package bookstore.dto;
 
 public class BookDto {
-    private Long id;
+    private Long bookId;
     private String title;
     private String author;
     private String genre;
-    private Boolean isAvailable;
 
     public String getTitle() {
         return title;
@@ -31,19 +30,12 @@ public class BookDto {
         this.genre = genre;
     }
 
-    public Long getId() {
-        return id;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
-    public Boolean getAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(Boolean available) {
-        isAvailable = available;
-    }
 }

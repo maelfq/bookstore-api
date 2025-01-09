@@ -4,6 +4,7 @@ import bookstore.constant.BookstoreConstants;
 import bookstore.database_entity.BookEntity;
 import bookstore.dto.BookDto;
 import bookstore.mapper.BookDtoToEntityMapper;
+import bookstore.mapper.BookEntityToDtoMapper;
 import bookstore.mapper.CsvItemToBookDtoMapper;
 import bookstore.repository.BookRepository;
 import bookstore.util.ParseCsvUtil;
@@ -17,8 +18,11 @@ public class LoadDatasetService {
 
     private final BookRepository bookRepository;
 
-    public LoadDatasetService(BookRepository bookRepository) {
+    private final GeneratePhysicalBooksService generatePhysicalBooksService;
+
+    public LoadDatasetService(BookRepository bookRepository, GeneratePhysicalBooksService generatePhysicalBooksService) {
         this.bookRepository = bookRepository;
+        this.generatePhysicalBooksService = generatePhysicalBooksService;
     }
 
     public boolean execute() {
@@ -26,9 +30,11 @@ public class LoadDatasetService {
         List<String> bookLines = ParseCsvUtil.parseFileAsListOfLines(datasetCsv);
         List<BookDto> books = getAllBooksToInsert(bookLines);
         List<BookEntity> bookEntities = books.stream().map(BookDtoToEntityMapper::map).toList();
+        List<BookEntity> savedBookEntities = bookRepository.saveAll(bookEntities);
+        List<BookDto> savedBookDtos = savedBookEntities.stream().map(BookEntityToDtoMapper::map).toList();
 
-        bookRepository.saveAll(bookEntities);
-
+        //TODO: remove service call and extract its call in a controller
+        generatePhysicalBooksService.execute(savedBookDtos);
         return true;
     }
 

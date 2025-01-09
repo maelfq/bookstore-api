@@ -6,11 +6,10 @@ import bookstore.dto.BookDto;
 public class BookEntityToDtoMapper {
     public static BookDto map(BookEntity bookEntity) {
         BookDto bookDto = new BookDto();
-        bookDto.setId(bookEntity.getId());
+        bookDto.setBookId(bookEntity.getBookId());
         bookDto.setTitle(bookEntity.getTitle());
         bookDto.setAuthor(bookEntity.getAuthor());
         bookDto.setGenre(bookEntity.getGenre());
-        bookDto.setAvailable(bookEntity.getAvailable());
         return bookDto;
     }
 }
