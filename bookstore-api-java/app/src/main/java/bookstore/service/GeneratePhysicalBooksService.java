@@ -35,7 +35,7 @@ public class GeneratePhysicalBooksService {
 
         bookDtos.forEach( bookDto -> {
             ArrayList<PhysicalBookDto> physicalBooksForGivenBook = new ArrayList<>();
-            int numberOfCopies = random.nextInt(MAX_BOOKS);
+            int numberOfCopies = random.nextInt(MAX_BOOKS) + 1;
             int physicalStateOfBook = random.nextInt(PhysicalBookStateEnum.values().length);
 
             for(int i = 0; i<numberOfCopies; i++) {
