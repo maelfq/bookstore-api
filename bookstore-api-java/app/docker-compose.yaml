@@ -1,7 +1,7 @@
 ### DOCKERFILE
 services:
   bookstore-database-postgres:
-    image: postgres
+    image: postgres-bookstore
     environment:
       POSTGRES_PASSWORD: password
     ports:
