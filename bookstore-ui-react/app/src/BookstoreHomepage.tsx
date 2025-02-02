@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { BookDto, getFeaturedBooks } from "./service/requests";
 import './bookstore-theme.css';
 import NotFoundPage from "./NotFoundPage";
+import { BookPage } from "./BookPage";
 
 function BookstoreHomepage() {
     const [books, setBooks] = useState<BookDto[]>([]);
@@ -10,9 +11,18 @@ function BookstoreHomepage() {
 
     function renderDisplayedFeaturedBooks(data: BookDto[]) {
         const books = data.map((book) => {
-            return ( <li key={book.bookId}>"{book.title}" par <b>{book.author}</b></li>)
+            return (
+                <div key={book.bookId}>
+                    "{book.title}" par <b>{book.author}</b> <button onClick={() => displayBook(book)}>Consulter</button>
+                    <Link to="/book" state={{bookDto: book}}>Contact</Link>
+                </div>
+            );
     });
         return books;
+    }
+
+    function displayBook(book: BookDto) {
+        console.log(book)
     }
 
     function rentRandomBook(): BookDto | null {
@@ -31,31 +41,38 @@ function BookstoreHomepage() {
     }, [])
     return (
         <div className="bookstore-homepage">
-            <div className="bookstore-navbar">
-                <button> Accueil </button>
-            </div>
             <h1>Bienvenue à la bibliothèque</h1>
-            { books != undefined && (
-                <p>{books.length}</p>   
-            )}
             <button onClick={rentRandomBook}>Emprunter un livre au hasard !</button>
             <br />
+            { books != undefined && (
+                <p>Voici une sélection de {books.length} livres que vous pourriez aimer :</p>   
+            )}
             <ul>{displayedFeaturedBooks}</ul>
 
         </div>
     )
 }
 
-export function BookStoreIndex() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<BookstoreHomepage/>} >
-                    <Route index element={<BookstoreHomepage/>}></Route>
-                </Route>
-                <Route path="test" element={<NotFoundPage/>}></Route>
+export function BookstoreNavbar() {
+     return (
+        <div className="bookstore-navbar">
+            <button> Accueil </button>
+        </div>
+    );
+}
 
-            </Routes>
-        </BrowserRouter>
+export function BookstoreIndex() {
+    return (
+        <div>
+            <BookstoreNavbar />
+            <BrowserRouter>
+                <Routes>
+                    <Route index path="home" element={<BookstoreHomepage/>} />
+                    <Route path="*" element={<NotFoundPage/>} />
+                    <Route path="book" element={<BookPage />} />
+                </Routes>
+            </BrowserRouter>
+        </div>
+
     )
 };

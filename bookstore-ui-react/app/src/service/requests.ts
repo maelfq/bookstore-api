@@ -28,3 +28,22 @@ export interface BookDto {
     author: string,
     genre: string
 }
+
+export interface PhysicalBookDto {
+    physicalBookId: number,
+    bookState: BookStateEnum,
+    bookDto: BookDto,
+    customerDto: CustomerDto
+}
+
+export enum BookStateEnum {
+    POOR,
+    MEDIUM,
+    GOOD,
+    NEW
+}
+
+export interface CustomerDto {
+    userId: number,
+    name: string
+}
