@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /bookstore
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/bookstore
