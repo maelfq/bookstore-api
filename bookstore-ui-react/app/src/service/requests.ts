@@ -21,6 +21,13 @@ export async function getFeaturedBooks(): Promise<BookDto[]> {
     return books;
 }
 
+export async function getPhysicalBooksById(id: number): Promise<PhysicalBookDto[]> {
+    const physicalBooks: PhysicalBookDto[] = await fetch(`${backEndUrl}/api/get-books-by-id?bookId=${id}`)
+    .then((response: Response) => response.json())
+    .catch(error => console.warn(error));
+    return physicalBooks;
+}
+
 
 export interface BookDto {
     bookId: number,

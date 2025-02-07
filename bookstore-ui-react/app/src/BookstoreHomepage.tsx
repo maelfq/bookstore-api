@@ -4,29 +4,55 @@ import { BookDto, getFeaturedBooks } from "./service/requests";
 import './bookstore-theme.css';
 import NotFoundPage from "./NotFoundPage";
 import { BookPage } from "./BookPage";
+import bookLogo from './assets/material_book_icon.png';
+import homeLogo from './assets/material_home_icon.png';
 
-function BookstoreHomepage() {
+export function BookstoreIndex() {
+    return (
+        <BrowserRouter>
+            <BookstoreNavbar />
+            <div className="bookstore-page-core">
+                <Routes>
+                    <Route index path="/" element={<BookstoreFeaturedHomepage/>} />
+                    <Route path="*" element={<NotFoundPage/>} />
+                    <Route path="book" element={<BookPage />} />
+                </Routes>
+            </div>
+ 
+        </BrowserRouter>
+ 
+    )
+ };
+
+export function BookstoreNavbar() {
+    return (
+       <div className="bookstore-navbar">
+               <Link to="/"><button className="navbar-button"><img src={homeLogo} className="material-icon" alt="Home logo" /> Home</button></Link>
+       </div>
+   );
+}
+
+function BookstoreFeaturedHomepage() {
     const [books, setBooks] = useState<BookDto[]>([]);
     const [displayedFeaturedBooks, setDisplayedFeaturedBooks] = useState<JSX.Element[]>([]);
 
     function renderDisplayedFeaturedBooks(data: BookDto[]) {
         const books = data.map((book) => {
             return (
-                <div key={book.bookId}>
-                    "{book.title}" par <b>{book.author}</b> <button onClick={() => displayBook(book)}>Consulter</button>
-                    <Link to="/book" state={{bookDto: book}}>Contact</Link>
+                <div key={book.bookId} className="book-list-entry">
+                    <div className="book-list-entry-text">{book.title} - <b>{book.author}</b></div>
+                    
+                    <Link to="/book" state={{bookDto: book}}>
+                        <button><img src={bookLogo} className="material-icon" alt="Book logo" /></button>
+                    </Link>
                 </div>
             );
     });
         return books;
     }
 
-    function displayBook(book: BookDto) {
-        console.log(book)
-    }
-
     function rentRandomBook(): BookDto | null {
-        alert('Fonctionnalité non implémentée pour le moment');
+        alert('Feature not available at the moment!');
         return null;
     }
 
@@ -35,44 +61,22 @@ function BookstoreHomepage() {
         .then( (data) => {
             setBooks(data);
             setDisplayedFeaturedBooks(renderDisplayedFeaturedBooks(data))
-        })
-        .finally(() => console.log('yo'));
+            console.log(data);
+        });
 
     }, [])
+
+
     return (
         <div className="bookstore-homepage">
-            <h1>Bienvenue à la bibliothèque</h1>
-            <button onClick={rentRandomBook}>Emprunter un livre au hasard !</button>
+            <h1>Welcome to the library</h1>
+            <button onClick={rentRandomBook}>Rent a random book!</button>
             <br />
             { books != undefined && (
-                <p>Voici une sélection de {books.length} livres que vous pourriez aimer :</p>   
+                <p>Here are {books.length} featured books you might like</p>   
             )}
-            <ul>{displayedFeaturedBooks}</ul>
+            <div>{displayedFeaturedBooks}</div>
 
         </div>
     )
 }
-
-export function BookstoreNavbar() {
-     return (
-        <div className="bookstore-navbar">
-            <button> Accueil </button>
-        </div>
-    );
-}
-
-export function BookstoreIndex() {
-    return (
-        <div>
-            <BookstoreNavbar />
-            <BrowserRouter>
-                <Routes>
-                    <Route index path="home" element={<BookstoreHomepage/>} />
-                    <Route path="*" element={<NotFoundPage/>} />
-                    <Route path="book" element={<BookPage />} />
-                </Routes>
-            </BrowserRouter>
-        </div>
-
-    )
-};
