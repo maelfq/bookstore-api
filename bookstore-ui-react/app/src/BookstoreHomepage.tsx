@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { BookDto, getFeaturedBooks } from "./service/requests";
 import './bookstore-theme.css';
 import NotFoundPage from "./NotFoundPage";
-import { BookPage } from "./BookPage";
+import { BookWithPhysicalBooksPage } from "./BookPage";
 import bookLogo from './assets/material_book_icon.png';
 import homeLogo from './assets/material_home_icon.png';
 
@@ -15,7 +15,7 @@ export function BookstoreIndex() {
                 <Routes>
                     <Route index path="/" element={<BookstoreFeaturedHomepage/>} />
                     <Route path="*" element={<NotFoundPage/>} />
-                    <Route path="book" element={<BookPage />} />
+                    <Route path="book" element={<BookWithPhysicalBooksPage />} />
                 </Routes>
             </div>
  

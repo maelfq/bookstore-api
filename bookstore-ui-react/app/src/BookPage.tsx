@@ -3,7 +3,7 @@ import { BookDto, PhysicalBookDto } from "./service/requests";
 import { useSearchParams, useLocation, data } from 'react-router-dom';
 import { getPhysicalBooksById } from "./service/requests";
 
-export function BookPage() {
+export function BookWithPhysicalBooksPage() {
 
     const location = useLocation();
     const bookDto: BookDto = location.state["bookDto"];
@@ -25,20 +25,32 @@ export function BookPage() {
 
 
     
-    function renderPhysicalBooks(books: PhysicalBookDto[]) {
+    function renderPhysicalBooks(books: PhysicalBookDto[]): JSX.Element {
+        const physicalBookRows: JSX.Element[] = books.map((book) => {
+            return (
+                <tr id="${book.physicalBookId}" >
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            )
+        });
         return (
             <table className="physical-books-table">
-                <th></th>
+                <tr>
+                    <th>Physical book id</th>
+                    <th>Book state</th>
+                    <th>Action</th>
+                </tr>
             </table>
         )
     }
 
-
-
     return (
         <div>
             <h2>`{bookDto.title}` by {bookDto.author}</h2>
-            {physicalBookDtos.length} physical books, 
+            {physicalBookDtos.length} physical books,
+            <br /> 
             {physicalBooksDisplayed}
         </div>
     );
