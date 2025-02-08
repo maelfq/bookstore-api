@@ -1,6 +1,7 @@
-- configurer le router
 - créer un composant qui affiche les PhysicalBookDtos pour un BookDto
 - requête POST pour emprunter le livre depuis cet écran
 - afficher par genre les livres
-- login
-- écran sur mes locations quand utilisateur 
+- login page
+- sign up page
+- écran sur mes locations quand l'utilisateur est connecté
+- 

@@ -7,7 +7,7 @@ import { BookWithPhysicalBooksPage } from "./BookPage";
 import bookLogo from './assets/material_book_icon.png';
 import homeLogo from './assets/material_home_icon.png';
 
-export function BookstoreIndex() {
+export function BookstoreIndex(): JSX.Element {
     return (
         <BrowserRouter>
             <BookstoreNavbar />
@@ -24,7 +24,7 @@ export function BookstoreIndex() {
     )
  };
 
-export function BookstoreNavbar() {
+export function BookstoreNavbar(): JSX.Element {
     return (
        <div className="bookstore-navbar">
                <Link to="/"><button className="navbar-button"><img src={homeLogo} className="material-icon" alt="Home logo" /> Home</button></Link>
@@ -32,22 +32,16 @@ export function BookstoreNavbar() {
    );
 }
 
-function BookstoreFeaturedHomepage() {
+function BookstoreFeaturedHomepage(): JSX.Element {
     const [books, setBooks] = useState<BookDto[]>([]);
     const [displayedFeaturedBooks, setDisplayedFeaturedBooks] = useState<JSX.Element[]>([]);
 
-    function renderDisplayedFeaturedBooks(data: BookDto[]) {
+    function renderDisplayedFeaturedBooks(data: BookDto[]): JSX.Element[] {
         const books = data.map((book) => {
             return (
-                <div key={book.bookId} className="book-list-entry">
-                    <div className="book-list-entry-text">{book.title} - <b>{book.author}</b></div>
-                    
-                    <Link to="/book" state={{bookDto: book}}>
-                        <button><img src={bookLogo} className="material-icon" alt="Book logo" /></button>
-                    </Link>
-                </div>
+                <BookRow book={book}/>
             );
-    });
+        });
         return books;
     }
 
@@ -73,10 +67,27 @@ function BookstoreFeaturedHomepage() {
             <button onClick={rentRandomBook}>Rent a random book!</button>
             <br />
             { books != undefined && (
-                <p>Here are {books.length} featured books you might like</p>   
+                <p>Here are {books.length} featured books you might like:</p>   
             )}
             <div>{displayedFeaturedBooks}</div>
 
         </div>
     )
+}
+
+interface BookRowProp {
+    book: BookDto;
+}
+
+export function BookRow(bookRowProp: BookRowProp): JSX.Element {
+    const book: BookDto = bookRowProp.book;
+    return (
+        <div key={book.bookId} className="book-list-entry">
+            <div className="book-list-entry-text">{book.title} - <b>{book.author}</b></div>
+            
+            <Link to="/book" state={{bookDto: book}}>
+                <button><img src={bookLogo} className="material-icon" alt="Book logo" /></button>
+            </Link>
+        </div>
+    );
 }

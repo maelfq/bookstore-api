@@ -10,7 +10,7 @@ export function BookWithPhysicalBooksPage() {
 
     const [physicalBookDtos, setPhysicalBookDtos] = useState<PhysicalBookDto[]>([]);
     const [availableBooksCount, setAvailableBooksCount] = useState<number>(0);
-    const [physicalBooksDisplayed, setPhysicalBooksDisplayed] = useState<JSX.Element[]>([]);
+    const [physicalBooksDisplayed, setPhysicalBooksDisplayed] = useState<JSX.Element | undefined >(undefined);
 
     useEffect( () => {
         // retrieve physical books for given bookId
@@ -19,30 +19,35 @@ export function BookWithPhysicalBooksPage() {
             setPhysicalBookDtos(data);
             console.log(data);
             //TODO
-            //setPhysicalBooksDisplayed(renderPhysicalBooks(data))
+            setPhysicalBooksDisplayed((renderPhysicalBooks(data)));
         });
     }, [])
 
 
-    
+    //TODO: extract as component
     function renderPhysicalBooks(books: PhysicalBookDto[]): JSX.Element {
         const physicalBookRows: JSX.Element[] = books.map((book) => {
             return (
-                <tr id="${book.physicalBookId}" >
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <PhysicalBookRow key={book.physicalBookId} physicalBookDto={book}/>
             )
         });
         return (
-            <table className="physical-books-table">
-                <tr>
-                    <th>Physical book id</th>
-                    <th>Book state</th>
-                    <th>Action</th>
-                </tr>
-            </table>
+            <div>
+                <table className="physical-books-table">
+                    <thead>
+                        <tr>
+                            <th>Physical book id</th>
+                            <th>Book state</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {physicalBookRows}
+                    </tbody>
+                </table>
+            </div>
+
         )
     }
 
@@ -56,15 +61,28 @@ export function BookWithPhysicalBooksPage() {
     );
 }
 
-export function PhysicalBookList() {
+interface PhysicalBookRowProp {
+    physicalBookDto?: PhysicalBookDto
+}
 
-    function rentPhysicalBook() {
-        return;
+export function PhysicalBookRow(physicalBookRowProp: PhysicalBookRowProp) {
+    const physicalBook: PhysicalBookDto | undefined = physicalBookRowProp?.physicalBookDto;
+    let statusMessage: string;
+    if(physicalBook && physicalBook.customerDto && physicalBook.customerDto.name) {
+        statusMessage =  `Currently rented by ${physicalBook?.customerDto.name}`;
     }
-
+    else {
+        statusMessage = "Book available";
+    }
+    
     return (
-        <div className="physical-book-list-container">
-
-        </div>
-    )
+        <tr>
+            <td>{physicalBook?.physicalBookId}</td>
+            <td>{physicalBook?.bookState}</td>
+            <td>{statusMessage}</td>
+            <td>
+                <button>Hey</button>
+            </td>
+        </tr>
+    );
 }

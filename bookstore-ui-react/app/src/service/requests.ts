@@ -6,7 +6,7 @@ class CurrentUser {
 }
 
 export async function getAllBooks(): Promise<BookDto[]> {
-    const books: BookDto[] = await fetch(`${backEndUrl}/api/get-all-books`)
+    const books: BookDto[] = await fetch(`${backEndUrl}/api/bookstore/book/get-all-books`)
     .then((response: Response) => response.json())
     .catch(error => console.warn(error));
     console.log(books); 
@@ -14,7 +14,7 @@ export async function getAllBooks(): Promise<BookDto[]> {
 }
 
 export async function getFeaturedBooks(): Promise<BookDto[]> {
-    const books: BookDto[] = await fetch(`${backEndUrl}/api/featured-books`)
+    const books: BookDto[] = await fetch(`${backEndUrl}/api/bookstore/book/featured-books`)
     .then((response: Response) => response.json())
     .catch(error => console.warn(error));
     console.log(books); 
@@ -22,10 +22,22 @@ export async function getFeaturedBooks(): Promise<BookDto[]> {
 }
 
 export async function getPhysicalBooksById(id: number): Promise<PhysicalBookDto[]> {
-    const physicalBooks: PhysicalBookDto[] = await fetch(`${backEndUrl}/api/get-books-by-id?bookId=${id}`)
+    const physicalBooks: PhysicalBookDto[] = await fetch(`${backEndUrl}/api/bookstore/book/physical/get-books-by-id?bookId=${id}`)
     .then((response: Response) => response.json())
     .catch(error => console.warn(error));
     return physicalBooks;
+}
+
+export async function rentBook(bookDto: BookDto, customerId: number): Promise<PhysicalBookDto> {
+    const physicalBookDto: PhysicalBookDto = await fetch(`${backEndUrl}/api/bookstore/book/rent-book?customerId=${customerId}`,
+        {
+            method: "POST",
+            body: JSON.stringify(bookDto)
+        }
+    )
+    .then((response: Response) => response.json())
+    .catch(error => console.warn(error));
+    return physicalBookDto;
 }
 
 
@@ -51,6 +63,7 @@ export enum BookStateEnum {
 }
 
 export interface CustomerDto {
-    userId: number,
-    name: string
+    email: string,
+    name: string,
+    password: string
 }
