@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/add-new-book")
+@RequestMapping("/api/bookstore/admin/add-new-book")
 public class AddNewBookController {
 
     private final AddNewBookService addNewBookService;

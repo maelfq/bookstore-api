@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/get-books-by-id")
+@RequestMapping("/api/bookstore/book/physical/get-books-by-id")
 public class FindPhysicalBooksByBookIdController {
 
     private final FindPhysicalBooksByBookIdService findPhysicalBooksByBookIdService;

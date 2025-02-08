@@ -1,23 +1,21 @@
 package bookstore.database_entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class CustomerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long customerId;
+    private String email;
     private String name;
+    private String password;
 
-    public Long getCustomerId() {
-        return customerId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -28,5 +26,11 @@ public class CustomerEntity {
         this.name = name;
     }
 
-    //private Set<BookEntity> rentedBooks;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

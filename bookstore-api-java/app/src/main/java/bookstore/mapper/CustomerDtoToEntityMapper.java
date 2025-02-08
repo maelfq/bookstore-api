@@ -7,8 +7,9 @@ public class CustomerDtoToEntityMapper {
     public static CustomerEntity map(CustomerDto customerDto) {
         if(customerDto != null) {
             CustomerEntity customerEntity = new CustomerEntity();
-            customerEntity.setCustomerId(customerDto.getCustomerId());
+            customerEntity.setEmail(customerDto.getEmail());
             customerEntity.setName(customerDto.getName());
+            customerEntity.setPassword(customerDto.getPassword());
             return customerEntity;
         }
         return null;

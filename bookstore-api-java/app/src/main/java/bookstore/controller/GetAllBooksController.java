@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/get-all-books")
+@RequestMapping("/api/bookstore/book/get-all-books")
 public class GetAllBooksController {
 
     private final GetAllBooksService getAllBooksService;

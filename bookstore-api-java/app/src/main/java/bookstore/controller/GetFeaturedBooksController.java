@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/featured-books")
+@RequestMapping("/api/bookstore/book/featured-books")
 public class GetFeaturedBooksController {
 
     private final GetFeaturedBooksService getFeaturedBooksService;

@@ -1,9 +1,8 @@
 package bookstore.dto;
 
-public class CustomerDto {
+public class LoginCustomerResponseDto {
     private String email;
     private String name;
-    private String password;
 
     public String getEmail() {
         return email;
@@ -19,13 +18,5 @@ public class CustomerDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

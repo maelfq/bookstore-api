@@ -9,8 +9,9 @@ public class CustomerEntityToDtoMapper {
             return null;
         }
         CustomerDto customerDto = new CustomerDto();
-        customerDto.setCustomerId(customerEntity.getCustomerId());
+        customerDto.setEmail(customerEntity.getEmail());
         customerDto.setName(customerEntity.getName());
+        customerDto.setPassword(customerEntity.getPassword());
         return customerDto;
     }
 }

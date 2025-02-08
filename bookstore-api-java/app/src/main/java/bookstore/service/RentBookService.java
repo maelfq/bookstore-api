@@ -28,9 +28,9 @@ public class RentBookService {
         this.customerRepository = customerRepository;
     }
 
-    public PhysicalBookDto execute(BookDto bookDto, Long customerId) {
+    public PhysicalBookDto execute(BookDto bookDto, String username) {
         List<PhysicalBookEntity> physicalBooks = physicalBookRepository.findByBookEntity_BookId(bookDto.getBookId());
-        // TODO: get available books
+
         List<PhysicalBookDto> physicalBookDtos = physicalBooks.stream().map(PhysicalBookEntityToDtoMapper::map).toList();
         List<PhysicalBookDto> booksAvailable = physicalBookDtos.stream().
                 filter(physicalBookDto -> physicalBookDto.getCustomerDto() == null).toList();
@@ -40,7 +40,7 @@ public class RentBookService {
             throw new RuntimeException(ERROR_MESSAGE_BOOK_NOT_FOUND);
         }
         PhysicalBookDto physicalBookDto = optionalBookFound.get();
-        Optional<CustomerEntity> optionalCustomer = customerRepository.findById(customerId);
+        Optional<CustomerEntity> optionalCustomer = customerRepository.findById(username);
         if (optionalCustomer.isEmpty()) {
             throw new RuntimeException(ERROR_MESSAGE_USER_NOT_FOUND);
         }

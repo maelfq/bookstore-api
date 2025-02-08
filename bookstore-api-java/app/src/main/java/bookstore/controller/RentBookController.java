@@ -24,7 +24,7 @@ import java.util.Optional;
 import static bookstore.service.RentBookService.ERROR_MESSAGE_USER_NOT_FOUND;
 
 @RestController
-@RequestMapping("/api/rent-book")
+@RequestMapping("/api/bookstore/book/rent-book")
 public class RentBookController {
 
     private final RentBookService rentBookService;
@@ -34,13 +34,12 @@ public class RentBookController {
     }
 
     @PostMapping
-    public ResponseEntity rentBookController(@RequestBody BookDto bookDto, Long customerId) {
+    public ResponseEntity rentBookController(@RequestBody BookDto bookDto, String username) {
         PhysicalBookDto bookRentedDto = null;
         try {
-            bookRentedDto = this.rentBookService.execute(bookDto, customerId);
+            bookRentedDto = this.rentBookService.execute(bookDto, username);
         }
         catch (RuntimeException e) {
-
             return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(bookRentedDto, HttpStatus.OK);
