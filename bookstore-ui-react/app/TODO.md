@@ -1,7 +1,6 @@
-- créer un composant qui affiche les PhysicalBookDtos pour un BookDto
-- requête POST pour emprunter le livre depuis cet écran
+- requête POST pour emprunter un livre depuis les 2 types d'écrans
 - afficher par genre les livres
-- login page
-- sign up page
 - écran sur mes locations quand l'utilisateur est connecté
-- 
+- écran avec tous les livres (BONUS: fonction recherche & bouton pour emprunter un livre depuis la page) 
+- remplacer l'écran login par un écran avec les infos quand l'utilisateur est connecté
+- écran pour consulter tous les livres empruntés par l'utilisateur connecté

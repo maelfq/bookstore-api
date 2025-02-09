@@ -67,6 +67,7 @@ export function LoginPage(): JSX.Element {
                 <button onClick={handleLogin}>Log in</button>
 
             </div>
+            <br />
 
             {responseDisplay}
 

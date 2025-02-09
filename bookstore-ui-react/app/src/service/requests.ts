@@ -60,7 +60,15 @@ export async function signUp(customerDto: CustomerDto): Promise<CustomerDto | Ht
 }
 
 export async function login(customerDto: CustomerDto): Promise<ResponseLoginDto | HttpRequestError> {
-    const loginResponse: ResponseLoginDto | HttpRequestError = await fetch(`${backEndUrl}/api/bookstore/customer/login&email=${customerDto?.email}&password=${customerDto?.password}`)
+    const loginResponse: ResponseLoginDto | HttpRequestError = await fetch(`${backEndUrl}/api/bookstore/customer/login`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(customerDto)
+        }
+    )
     .then((response: Response) => response.json())
     .catch(error => console.warn(error));
     return loginResponse;
