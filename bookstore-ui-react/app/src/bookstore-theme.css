@@ -9,6 +9,26 @@
     justify-content: space-between;
 }
 
+.navbar-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbar-left > * {
+    margin: 5px;
+}
+
+.navbar-login {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbar-login > * {
+    margin: 5px;
+}
+
 .navbar-button {
     display: flex;
     flex-direction: row;

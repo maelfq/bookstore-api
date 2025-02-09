@@ -8,7 +8,9 @@ import { BookWithPhysicalBooksPage } from "./BookPage";
 import bookLogo from './assets/material_book_icon.png';
 import homeLogo from './assets/material_home_icon.png';
 import accountLogo from './assets/material_account_icon.png';
+import listLogo from './assets/material_list_icon.png';
 import { SignUpPage } from "./SignUpPage";
+import { AllBooksPage } from "./AllBooksPage";
 
 
 export function BookstoreIndex(): JSX.Element {
@@ -18,10 +20,11 @@ export function BookstoreIndex(): JSX.Element {
             <div className="bookstore-page-core">
                 <Routes>
                     <Route index path="/" element={<BookstoreFeaturedHomepage/>} />
-                    <Route path="*" element={<NotFoundPage/>} />
+                    <Route path="all-books" element={<AllBooksPage />} />
                     <Route path="book" element={<BookWithPhysicalBooksPage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route path="sign-up" element={<SignUpPage />} />
+                    <Route path="*" element={<NotFoundPage/>} />
                 </Routes>
             </div>
  
@@ -35,7 +38,10 @@ export function BookstoreNavbar(): JSX.Element {
        <div className="bookstore-navbar">
             <div className="navbar-left">
                <Link to="/"><button className="navbar-button">
-                <img src={homeLogo} className="material-icon" alt="Home logo" /> Home</button>
+                    <img src={homeLogo} className="material-icon" alt="Home logo" /> Home</button>
+                </Link>
+                <Link to="/all-books"><button className="navbar-button">
+                    <img src={listLogo} className="material-icon" alt="List of books logo" /> All books</button>
                 </Link>
             </div>
             <div className="navbar-login">
@@ -60,10 +66,6 @@ function BookstoreFeaturedHomepage(): JSX.Element {
         return books;
     }
 
-    function rentRandomBook(): BookDto | null {
-        alert('Feature not available at the moment!');
-        return null;
-    }
 
     useEffect(() => {
         getFeaturedBooks()
@@ -72,7 +74,6 @@ function BookstoreFeaturedHomepage(): JSX.Element {
             setDisplayedFeaturedBooks(renderDisplayedFeaturedBooks(data))
             console.log(data);
         });
-
     }, [])
 
 
@@ -105,4 +106,19 @@ export function BookRow(bookRowProp: BookRowProp): JSX.Element {
             </Link>
         </div>
     );
+}
+
+
+export function renderDisplayedBooks(data: BookDto[]): JSX.Element[] {
+    const books = data.map((book) => {
+        return (
+            <BookRow key={book.bookId} book={book}/>
+        );
+    });
+    return books;
+}
+
+export function rentRandomBook(): BookDto | null {
+    alert('Feature not available at the moment!');
+    return null;
 }
