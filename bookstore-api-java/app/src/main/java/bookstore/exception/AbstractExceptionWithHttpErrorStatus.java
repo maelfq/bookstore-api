@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public class AbstractExceptionWithHttpErrorStatus extends RuntimeException implements ExceptionWithHttpErrorStatusInterface {
 
+    private HttpStatus httpStatus = getHttpErrorStatus();
+
     public AbstractExceptionWithHttpErrorStatus(String message) {
         super(message);
     }

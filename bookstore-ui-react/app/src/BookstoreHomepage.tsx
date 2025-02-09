@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { BookDto, getFeaturedBooks } from "./service/requests";
 import './bookstore-theme.css';
-import NotFoundPage from "./NotFoundPage";
+import { LoginPage } from "./LoginPage";
+import { NotFoundPage } from "./NotFoundPage";
 import { BookWithPhysicalBooksPage } from "./BookPage";
 import bookLogo from './assets/material_book_icon.png';
 import homeLogo from './assets/material_home_icon.png';
+import accountLogo from './assets/material_account_icon.png';
+import { SignUpPage } from "./SignUpPage";
+
 
 export function BookstoreIndex(): JSX.Element {
     return (
@@ -16,6 +20,8 @@ export function BookstoreIndex(): JSX.Element {
                     <Route index path="/" element={<BookstoreFeaturedHomepage/>} />
                     <Route path="*" element={<NotFoundPage/>} />
                     <Route path="book" element={<BookWithPhysicalBooksPage />} />
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="sign-up" element={<SignUpPage />} />
                 </Routes>
             </div>
  
@@ -27,7 +33,16 @@ export function BookstoreIndex(): JSX.Element {
 export function BookstoreNavbar(): JSX.Element {
     return (
        <div className="bookstore-navbar">
-               <Link to="/"><button className="navbar-button"><img src={homeLogo} className="material-icon" alt="Home logo" /> Home</button></Link>
+            <div className="navbar-left">
+               <Link to="/"><button className="navbar-button">
+                <img src={homeLogo} className="material-icon" alt="Home logo" /> Home</button>
+                </Link>
+            </div>
+            <div className="navbar-login">
+                <Link to="/login"><button className="navbar-button">
+                    <div>Login</div><img src={accountLogo} className="material-icon" alt="Account logo" /></button>
+                </Link>
+            </div>
        </div>
    );
 }
@@ -39,7 +54,7 @@ function BookstoreFeaturedHomepage(): JSX.Element {
     function renderDisplayedFeaturedBooks(data: BookDto[]): JSX.Element[] {
         const books = data.map((book) => {
             return (
-                <BookRow book={book}/>
+                <BookRow key={book.bookId} book={book}/>
             );
         });
         return books;

@@ -5,10 +5,9 @@ import bookstore.exception.AbstractExceptionWithHttpErrorStatus;
 import bookstore.service.SignUpCustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/bookstore/customer/sign-up")
 public class SignUpCustomerController {
@@ -20,13 +19,13 @@ public class SignUpCustomerController {
     }
 
     @PostMapping
-    public ResponseEntity createCustomerController(CustomerDto customerDto) {
+    public ResponseEntity createCustomerController(@RequestBody CustomerDto customerDto) {
         CustomerDto customerDtoCreated = null;
         try {
             customerDtoCreated = signUpCustomerService.execute(customerDto);
         }
         catch (AbstractExceptionWithHttpErrorStatus e) {
-            return new ResponseEntity(e.getMessage(), e.getHttpErrorStatus());
+            return new ResponseEntity(e, e.getHttpErrorStatus());
         }
         return new ResponseEntity(customerDtoCreated, HttpStatus.OK);
     }

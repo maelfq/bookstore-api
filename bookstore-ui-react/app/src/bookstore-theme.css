@@ -5,7 +5,8 @@
 
 .bookstore-navbar {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .navbar-button {
@@ -40,4 +41,66 @@
 .material-icon {
     height: 1rem;
     width: 1rem;
+}
+
+.sign-up-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.sign-up-form > * {
+    margin-top: 10px;
+}
+
+.input-container {
+    border: 2px solid #8a8080;
+    border-radius: 7px 7px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    transition: 0.3s;
+}
+
+.input-container:hover  {
+    border: 2px solid #b693b1;
+}
+
+.input-container:has(.input-text:focus) {
+    border: 2px solid #6294b1;
+}
+
+.input-label {
+    justify-content: left;
+}
+
+.input-text:focus {
+    outline: none;
+}
+
+.input-text {
+    border: 0px;
+    background-color: transparent;
+    font-size: 1.2rem;
+}
+
+div.error-container {
+    transition: 0.3s;
+    border: 2px solid #533232;
+    border-radius: 7px;
+    background-color: #cf7b7b;
+    color: #533232;
+    padding: 5px;
+    font-size: 1.2rem;
+}
+
+div.success-container {
+    transition: 0.3s;
+    border: 2px solid #192e28;
+    border-radius: 7px;
+    background-color: #7bcf86;
+    color: #192e28;
+    padding: 5px;
+    font-size: 1.2rem;
 }

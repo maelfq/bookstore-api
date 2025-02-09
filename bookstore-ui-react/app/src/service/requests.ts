@@ -40,6 +40,29 @@ export async function rentBook(bookDto: BookDto, customerId: number): Promise<Ph
     return physicalBookDto;
 }
 
+export async function signUp(customerDto: CustomerDto): Promise<CustomerDto | HttpRequestError> {
+    const signUpResponse: CustomerDto | HttpRequestError = await fetch(`${backEndUrl}/api/bookstore/customer/sign-up`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(customerDto)
+        }
+    )
+    .then((response: Response) => response.json())
+    .catch(error => console.warn(error));
+    return signUpResponse;
+}
+
+export interface HttpRequestError {
+    httpErrorStatus: string,
+    message: string
+}
+
+export function isHttpRequestError(data: any) {
+    return (<HttpRequestError>data).httpErrorStatus !== undefined;
+}
 
 export interface BookDto {
     bookId: number,
@@ -64,6 +87,11 @@ export enum BookStateEnum {
 
 export interface CustomerDto {
     email: string,
-    name: string,
+    name?: string,
     password: string
+}
+
+export interface ResponseLoginDto {
+    email: string,
+    name: string
 }
