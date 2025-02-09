@@ -1,20 +1,46 @@
 import { useState } from "react";
-import { CustomerDto, ResponseLoginDto } from "./service/requests";
+import { CurrentUser, CustomerDto, HttpRequestError, isHttpRequestError, login, ResponseLoginDto } from "./service/requests";
 import { Link } from "react-router-dom";
 
 export function LoginPage(): JSX.Element {
 
-    const [credentials, setCredentials] = useState<CustomerDto>({
-        email: '',
-        password: '',
-      });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [email, setEmail] = useState<string>('test');
+    const [password, setPassword] = useState<string>('');
+    const [responseDisplay, setResponseDisplay] = useState<JSX.Element>(<div></div>);
+
 
 
     function handleLogin(): void {
-        
-        //return null;
+        const loginDto: CustomerDto = {
+            email: email,
+            password: password
+        }
+        login(loginDto)
+        .then(
+            (response) => {
+                if(isHttpRequestError(response)) {
+                    const errorResponse: HttpRequestError = (response as HttpRequestError);
+                    setResponseDisplay(
+                        <div className="error-container">
+                            Error when attempting to log in.
+                            <br />
+                            {errorResponse.message}
+                        </div>
+                    )
+                }
+                else {
+                    const loginResponse : ResponseLoginDto = (response as ResponseLoginDto);
+                    CurrentUser.email = loginResponse.email;
+                    console.log(CurrentUser.email);
+                    setResponseDisplay(
+                        <div className="success-container">
+                            Logged in successfully!
+                        </div>
+                    );
+                }
+            }
+        )
+
     }
 
 
@@ -28,22 +54,23 @@ export function LoginPage(): JSX.Element {
                     <label className="input-label">
                         Enter your email
                         <br />
-                        <input type="email" className="input-text" onChange={(e) => console.log(e)} /> 
+                        <input type="email" className="input-text" placeholder="test@example.com" onChange={(e) => setEmail(e.target.value)} /> 
                     </label>
                 </div>
-
-                <br />
-                <label>
-                    Enter your password here
-                    <br />
-                    <input type="password" />
-                </label>
-                <br />
-                <button>Log in</button>
+                <div className="input-container">
+                    <label className="input-label">
+                        Enter your password here
+                        <br />
+                        <input type="password" className="input-text" onChange={e => setPassword(e.target.value)}/>
+                    </label>
+                </div>
+                <button onClick={handleLogin}>Log in</button>
 
             </div>
 
-            
+            {responseDisplay}
+
+            <br />
             <div className="small-text">
                 New to the bookstore?
             </div>

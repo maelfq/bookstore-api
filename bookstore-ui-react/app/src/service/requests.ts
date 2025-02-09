@@ -1,8 +1,12 @@
 const backEndUrl: string = "http://localhost:8080/bookstore";
 
-class CurrentUser {
-    public user: string | undefined = undefined;
+export class CurrentUser {
+    public static email: string | undefined = undefined;
     constructor() {}
+    
+    static isUserConnected(): boolean {
+        return CurrentUser.email != undefined;
+    }
 }
 
 export async function getAllBooks(): Promise<BookDto[]> {
@@ -53,6 +57,13 @@ export async function signUp(customerDto: CustomerDto): Promise<CustomerDto | Ht
     .then((response: Response) => response.json())
     .catch(error => console.warn(error));
     return signUpResponse;
+}
+
+export async function login(customerDto: CustomerDto): Promise<ResponseLoginDto | HttpRequestError> {
+    const loginResponse: ResponseLoginDto | HttpRequestError = await fetch(`${backEndUrl}/api/bookstore/customer/login&email=${customerDto?.email}&password=${customerDto?.password}`)
+    .then((response: Response) => response.json())
+    .catch(error => console.warn(error));
+    return loginResponse;
 }
 
 export interface HttpRequestError {

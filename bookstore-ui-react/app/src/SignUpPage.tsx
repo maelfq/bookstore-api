@@ -54,7 +54,7 @@ export function SignUpPage(): JSX.Element {
                     <label className="input-label">
                         Enter your email
                         <br />
-                        <input type="email" onChange={e => setEmail(e.target.value)} className="input-text" /> 
+                        <input type="email" placeholder="test@example.com" onChange={e => setEmail(e.target.value)} className="input-text" /> 
                     </label>
                 </div>
 
@@ -62,7 +62,7 @@ export function SignUpPage(): JSX.Element {
                     <label className="input-label">
                         Enter your name
                         <br />
-                        <input type="text" onChange={e => setName(e.target.value)} className="input-text" /> 
+                        <input type="text" placeholder="Nathan" onChange={e => setName(e.target.value)} className="input-text" /> 
                     </label>
                 </div>
 
