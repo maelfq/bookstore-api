@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { BookDto, getFeaturedBooks } from "./service/requests";
+import { BookDto, CurrentUser, getFeaturedBooks } from "./service/requests";
 import './bookstore-theme.css';
 import { LoginPage } from "./LoginPage";
 import { NotFoundPage } from "./NotFoundPage";
@@ -11,6 +11,7 @@ import accountLogo from './assets/material_account_icon.png';
 import listLogo from './assets/material_list_icon.png';
 import { SignUpPage } from "./SignUpPage";
 import { AllBooksPage } from "./AllBooksPage";
+import { MyAccountPage } from "./MyAccountPage";
 
 
 export function BookstoreIndex(): JSX.Element {
@@ -24,6 +25,7 @@ export function BookstoreIndex(): JSX.Element {
                     <Route path="book" element={<BookWithPhysicalBooksPage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route path="sign-up" element={<SignUpPage />} />
+                    <Route path="my-account" element={<MyAccountPage />} />
                     <Route path="*" element={<NotFoundPage/>} />
                 </Routes>
             </div>
@@ -45,12 +47,28 @@ export function BookstoreNavbar(): JSX.Element {
                 </Link>
             </div>
             <div className="navbar-login">
-                <Link to="/login"><button className="navbar-button">
-                    <div>Login</div><img src={accountLogo} className="material-icon" alt="Account logo" /></button>
-                </Link>
+                <LoginButton />
             </div>
        </div>
    );
+}
+
+export function LoginButton(): JSX.Element {
+    if(CurrentUser.email != undefined) {
+        return (
+        <Link to="my-page">
+            <button className="navbar-button">
+                <div>Account</div><img src={accountLogo} className="material-icon" alt="Account logo" />
+            </button>
+        </Link>);
+    }
+    return (
+        <Link to="/login">
+            <button className="navbar-button">
+                <div>Login</div><img src={accountLogo} className="material-icon" alt="Account logo" />
+            </button>
+        </Link>
+    )
 }
 
 function BookstoreFeaturedHomepage(): JSX.Element {

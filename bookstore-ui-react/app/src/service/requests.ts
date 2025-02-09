@@ -2,6 +2,7 @@ const backEndUrl: string = "http://localhost:8080/bookstore";
 
 export class CurrentUser {
     public static email: string | undefined = undefined;
+    public static name: string | undefined = undefined;
     constructor() {}
     
     static isUserConnected(): boolean {

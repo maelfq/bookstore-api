@@ -31,7 +31,7 @@ export function LoginPage(): JSX.Element {
                 else {
                     const loginResponse : ResponseLoginDto = (response as ResponseLoginDto);
                     CurrentUser.email = loginResponse.email;
-                    console.log(CurrentUser.email);
+                    CurrentUser.name = loginResponse?.name;
                     setResponseDisplay(
                         <div className="success-container">
                             Logged in successfully!

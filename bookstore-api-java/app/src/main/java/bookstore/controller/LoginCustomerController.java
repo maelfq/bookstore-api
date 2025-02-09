@@ -27,8 +27,8 @@ public class LoginCustomerController {
         try {
             loginCustomerResponseDto = handleLoginRequestService.execute(customerDto);
         } catch (AbstractExceptionWithHttpErrorStatus e) {
-            return new ResponseEntity<String>(e.getMessage(), e.getHttpErrorStatus());
+            return new ResponseEntity(e, e.getHttpErrorStatus());
         }
-        return new ResponseEntity<LoginCustomerResponseDto>(loginCustomerResponseDto, HttpStatus.OK);
+        return new ResponseEntity(loginCustomerResponseDto, HttpStatus.OK);
     }
 }
