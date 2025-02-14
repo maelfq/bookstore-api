@@ -2,11 +2,13 @@ package bookstore.util;
 
 import bookstore.database_entity.CustomerEntity;
 import bookstore.dto.CustomerDto;
+import bookstore.repository.CustomerRepository;
 
 import java.util.Optional;
 
 public class CustomerUtils {
-    public static Boolean doesUserExist(CustomerDto customerDto, Optional<CustomerEntity> customerOptional) {
+    public static Boolean doesUserExist(String customerEmail, CustomerRepository repository) {
+        Optional<CustomerEntity> customerOptional = repository.findById(customerEmail);
         return customerOptional.isPresent();
     }
 

@@ -33,9 +33,19 @@ export async function getPhysicalBooksById(id: number): Promise<PhysicalBookDto[
     return physicalBooks;
 }
 
-export async function rentBook(bookDto: BookDto, customerId: number): Promise<PhysicalBookDto> {
-    const physicalBookDto: PhysicalBookDto = await fetch(`${backEndUrl}/api/bookstore/book/rent-book?customerId=${customerId}`,
+export async function getBooksByUser(customerEmail: string): Promise<PhysicalBookDto[] | HttpRequestError> {
+    const physicalBooks: PhysicalBookDto[] = await fetch(`${backEndUrl}/api/bookstore/customer/books?customerEmail=${customerEmail}`)
+    .then((response: Response) => response.json())
+    .catch(error => console.warn(error));
+    return physicalBooks;
+}
+
+export async function rentBook(bookDto: BookDto, customerEmail: string): Promise<PhysicalBookDto | HttpRequestError> {
+    const physicalBookDto: PhysicalBookDto = await fetch(`${backEndUrl}/api/bookstore/book/rent-book?username=${customerEmail}`,
         {
+            headers: {
+                "Content-Type": "application/json"
+            },
             method: "POST",
             body: JSON.stringify(bookDto)
         }
@@ -75,14 +85,15 @@ export async function login(customerDto: CustomerDto): Promise<ResponseLoginDto 
     return loginResponse;
 }
 
+export function isHttpRequestError(data: any) {
+    return (<HttpRequestError>data).httpErrorStatus !== undefined;
+}
+
 export interface HttpRequestError {
     httpErrorStatus: string,
     message: string
 }
 
-export function isHttpRequestError(data: any) {
-    return (<HttpRequestError>data).httpErrorStatus !== undefined;
-}
 
 export interface BookDto {
     bookId: number,

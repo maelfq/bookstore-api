@@ -27,7 +27,7 @@ public class SignUpCustomerService {
     public CustomerDto execute(CustomerDto customerDto) {
 
         Optional<CustomerEntity> customerOptional = customerRepository.findById(customerDto.getEmail());
-        if(doesUserExist(customerDto,customerOptional)) {
+        if(doesUserExist(customerDto.getEmail(),customerRepository)) {
             throw new UserAlreadyExistsException("User already exists.");
         }
         if(!isCustomerRegistrationValid(customerDto)) {

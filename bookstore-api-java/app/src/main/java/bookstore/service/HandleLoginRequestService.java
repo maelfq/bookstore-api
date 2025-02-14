@@ -30,7 +30,7 @@ public class HandleLoginRequestService {
     public LoginCustomerResponseDto getLoginResponse(CustomerDto customerDto) {
         Optional<CustomerEntity> customerOptional = customerRepository.findById(customerDto.getEmail());
 
-        if(!doesUserExist(customerDto, customerOptional)) {
+        if(!doesUserExist(customerDto.getEmail(), customerRepository)) {
             throw new UserDoesNotExistExceptionInterface("User does not exist.");
         }
 
