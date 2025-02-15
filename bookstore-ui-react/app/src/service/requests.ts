@@ -40,7 +40,7 @@ export async function getBooksByUser(customerEmail: string): Promise<PhysicalBoo
     return physicalBooks;
 }
 
-export async function rentBook(bookDto: BookDto, customerEmail: string): Promise<PhysicalBookDto | HttpRequestError> {
+export async function rentBookByBookId(bookDto: BookDto, customerEmail: string): Promise<PhysicalBookDto | HttpRequestError> {
     const physicalBookDto: PhysicalBookDto = await fetch(`${backEndUrl}/api/bookstore/book/rent-book?username=${customerEmail}`,
         {
             headers: {
@@ -54,6 +54,21 @@ export async function rentBook(bookDto: BookDto, customerEmail: string): Promise
     .catch(error => console.warn(error));
     return physicalBookDto;
 }
+
+export async function updatePhysicalBook(physicalBook: PhysicalBookDto): Promise<PhysicalBookDto | HttpRequestError> {
+    const physicalBookDto: PhysicalBookDto = await fetch(`${backEndUrl}/api/bookstore/book/physical/rent`,
+        {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify(physicalBook)
+        }
+    )
+    .then((response: Response) => response.json())
+    .catch(error => console.warn(error));
+    return physicalBookDto;
+} 
 
 export async function signUp(customerDto: CustomerDto): Promise<CustomerDto | HttpRequestError> {
     const signUpResponse: CustomerDto | HttpRequestError = await fetch(`${backEndUrl}/api/bookstore/customer/sign-up`,

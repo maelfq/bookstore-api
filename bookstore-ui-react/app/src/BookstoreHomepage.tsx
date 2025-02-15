@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { BookDto, CurrentUser, getFeaturedBooks, HttpRequestError, isHttpRequestError, PhysicalBookDto, rentBook } from "./service/requests";
+import { BookDto, CurrentUser, getFeaturedBooks, HttpRequestError, isHttpRequestError, PhysicalBookDto, rentBookByBookId } from "./service/requests";
 import './bookstore-theme.css';
 import { LoginPage } from "./LoginPage";
 import { NotFoundPage } from "./NotFoundPage";
@@ -127,7 +127,7 @@ export function BookRow(bookRowProp: BookRowProp): JSX.Element {
 
     function rent(): void {        
         if(CurrentUser.email != undefined) {
-            rentBook(book, CurrentUser.email)
+            rentBookByBookId(book, CurrentUser.email)
             .then((data: PhysicalBookDto | HttpRequestError) => {
                 if(isHttpRequestError(data)) {
                     const error: HttpRequestError = (data as HttpRequestError);
