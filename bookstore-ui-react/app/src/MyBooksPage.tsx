@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CurrentUser, getBooksByUser, HttpRequestError, isHttpRequestError, PhysicalBookDto } from "./service/requests";
+import { CurrentUser, getBooksByUser, HttpRequestError, isHttpRequestError, PhysicalBookDto, updatePhysicalBook } from "./service/requests";
 import checkIcon from './assets/material_check_icon.png'
 
 export function MyBooksPage(): JSX.Element {
@@ -62,16 +62,29 @@ interface MyPhysicalBookRowProp {
 export function MyPhysicalBookRow(bookProp: MyPhysicalBookRowProp): JSX.Element {
     const book: PhysicalBookDto = bookProp.book;
 
-    function freeBook() {
-        // TODO
+    function freePhysicalBook() {
+        book.customerDto = undefined;
+        console.log(book);
+        
+        updatePhysicalBook(book)
+        .then((data: PhysicalBookDto | HttpRequestError) => {
+            if(isHttpRequestError(data)) {
+                const error: HttpRequestError = (data as HttpRequestError);
+                window.alert(`Error:\n${error.httpErrorStatus}: ${error.message}`)
+            }
+            else {
+                const physicalBook: PhysicalBookDto = data as PhysicalBookDto;
+                window.alert(`You freed the physical book ${physicalBook.physicalBookId}`);
+            }
+        });
     }
-    // TODO
+    
     return (
         <div key={book.physicalBookId} className="book-list-entry">
             <div className="book-list-entry-text">
                 {book.bookDto.title} - <b>{book.bookDto.author}</b></div>
             <div>
-                <button className="row-button" aria-placeholder="Rent book" title="Rent book" onClick={freeBook}>
+                <button className="row-button" aria-placeholder="Free book" title="Free book" onClick={freePhysicalBook}>
                     <img src={checkIcon} className="material-icon" alt="Free book" />
                 </button>
             </div>

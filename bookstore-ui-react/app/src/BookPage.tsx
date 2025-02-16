@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { BookDto, PhysicalBookDto } from "./service/requests";
+import { BookDto, CurrentUser, HttpRequestError, isHttpRequestError, PhysicalBookDto, updatePhysicalBook } from "./service/requests";
 import { useSearchParams, useLocation, data } from 'react-router-dom';
 import { getPhysicalBooksById } from "./service/requests";
+import bookLogo from "./assets/material_book_icon.png";
+import checkLogo from "./assets/material_check_icon.png"
 
 export function BookWithPhysicalBooksPage() {
 
@@ -32,7 +34,7 @@ export function BookWithPhysicalBooksPage() {
             )
         });
         return (
-            <div>
+            <div className="physical-books-table-container">
                 <table className="physical-books-table">
                     <thead>
                         <tr>
@@ -52,9 +54,9 @@ export function BookWithPhysicalBooksPage() {
     }
 
     return (
-        <div>
+        <div className="physical-book-container">
             <h2>`{bookDto.title}` by {bookDto.author}</h2>
-            {physicalBookDtos.length} physical books,
+            {physicalBookDtos.length} physical books
             <br /> 
             {physicalBooksDisplayed}
         </div>
@@ -62,26 +64,93 @@ export function BookWithPhysicalBooksPage() {
 }
 
 interface PhysicalBookRowProp {
-    physicalBookDto?: PhysicalBookDto
+    physicalBookDto: PhysicalBookDto
 }
 
 export function PhysicalBookRow(physicalBookRowProp: PhysicalBookRowProp) {
-    const physicalBook: PhysicalBookDto | undefined = physicalBookRowProp?.physicalBookDto;
+    const physicalBook: PhysicalBookDto = physicalBookRowProp.physicalBookDto;
     let statusMessage: string;
-    if(physicalBook && physicalBook.customerDto && physicalBook.customerDto.name) {
-        statusMessage =  `Currently rented by ${physicalBook?.customerDto.name}`;
+    if(physicalBook && physicalBook.customerDto && physicalBook.customerDto.email) {
+        statusMessage =  `Currently rented by ${physicalBook?.customerDto.email}`;
     }
     else {
         statusMessage = "Book available";
     }
+
+    function RentOrFreeOrDisabledPhysicalBookButton(): JSX.Element {
+        const isBookRentedToCurrentUser = (physicalBook?.customerDto != null) && (physicalBook.customerDto.email == CurrentUser.email);
+        const freeBookButtonEnabled: boolean = isBookRentedToCurrentUser ? true : false;
+        if(physicalBook?.customerDto != null) {
+            return (
+                <button disabled={freeBookButtonEnabled} >
+                    <img src={checkLogo} className="material-icon" alt="Free book" onClick={freePhysicalBook}/>
+                </button>
+            );
+        }
+        return (
+            <button className="row-button" aria-placeholder="Rent book" title="Rent book" onClick={rentPhysicalBook}>
+                <img src={bookLogo} className="material-icon" alt="Rent book" />
+            </button>
+        );
+    }
+
+    function rentPhysicalBook(): void {
+        // TODO
+        if(CurrentUser.email == undefined) {
+            window.alert("You must be authentificated to interact")
+        }
+        else {
+            physicalBook.customerDto = {
+                email: CurrentUser.email,
+                password: ''
+            }
+            console.log(physicalBook);
+            
+            updatePhysicalBook(physicalBook)
+            .then((data: PhysicalBookDto | HttpRequestError) => {
+                if(isHttpRequestError(data)) {
+                    const error: HttpRequestError = (data as HttpRequestError);
+                    window.alert(`Error:\n${error.httpErrorStatus}: ${error.message}`)
+                }
+                else {
+                    const physicalBook: PhysicalBookDto = data as PhysicalBookDto;
+                    window.alert(`You rented the physical book ${physicalBook.physicalBookId}`);
+                }
+            });
+        }
+    }
+
+    function freePhysicalBook(): void {
+        // TODO
+        if(CurrentUser.email == undefined) {
+            window.alert("You must be authentificated to interact")
+        }
+        else {
+            physicalBook.customerDto = undefined;
+            console.log(physicalBook);
+            
+            updatePhysicalBook(physicalBook)
+            .then((data: PhysicalBookDto | HttpRequestError) => {
+                if(isHttpRequestError(data)) {
+                    const error: HttpRequestError = (data as HttpRequestError);
+                    window.alert(`Error:\n${error.httpErrorStatus}: ${error.message}`)
+                }
+                else {
+                    const physicalBook: PhysicalBookDto = data as PhysicalBookDto;
+                    window.alert(`You freed the physical book ${physicalBook.physicalBookId}`);
+                }
+            });
+        }
+
+    }
     
     return (
-        <tr>
+        <tr className="physical-book-entry">
             <td>{physicalBook?.physicalBookId}</td>
             <td>{physicalBook?.bookState}</td>
             <td>{statusMessage}</td>
             <td>
-                <button>Hey</button>
+                <RentOrFreeOrDisabledPhysicalBookButton />
             </td>
         </tr>
     );

@@ -128,3 +128,35 @@ div.success-container {
 .row-button {
     margin-left: 5px;
 }
+
+.physical-book-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.physical-books-table {
+    width: 80%;
+    /*outline: 2px solid;*/
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.physical-books-table-container {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.physical-book-entry {
+    padding: 5px;
+    margin: 3px;
+    border-radius: 5px;
+    transition: 0.3s;
+    justify-content: space-between;
+}
+
+.physical-book-entry:hover {
+    background-color: #40424e;
+}

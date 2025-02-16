@@ -121,7 +121,7 @@ export interface PhysicalBookDto {
     physicalBookId: number,
     bookState: BookStateEnum,
     bookDto: BookDto,
-    customerDto: CustomerDto
+    customerDto?: CustomerDto
 }
 
 export enum BookStateEnum {
