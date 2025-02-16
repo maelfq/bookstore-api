@@ -26,7 +26,7 @@ services:
       context: ./bookstore-ui-react/app
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "3000:80"
     networks:
       - bookstore-network
     # depends_on:
