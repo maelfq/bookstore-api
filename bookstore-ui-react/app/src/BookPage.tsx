@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BookDto, CurrentUser, HttpRequestError, isHttpRequestError, PhysicalBookDto, updatePhysicalBook } from "./service/requests";
-import { useSearchParams, useLocation, data } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getPhysicalBooksById } from "./service/requests";
 import bookLogo from "./assets/material_book_icon.png";
 import checkLogo from "./assets/material_check_icon.png"
@@ -11,7 +11,6 @@ export function BookWithPhysicalBooksPage() {
     const bookDto: BookDto = location.state["bookDto"];
 
     const [physicalBookDtos, setPhysicalBookDtos] = useState<PhysicalBookDto[]>([]);
-    const [availableBooksCount, setAvailableBooksCount] = useState<number>(0);
     const [physicalBooksDisplayed, setPhysicalBooksDisplayed] = useState<JSX.Element | undefined >(undefined);
 
     useEffect( () => {

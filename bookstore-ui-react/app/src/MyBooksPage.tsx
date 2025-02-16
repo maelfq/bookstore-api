@@ -20,6 +20,7 @@ export function MyBooksPage(): JSX.Element {
         .then((data: PhysicalBookDto[] | HttpRequestError) => {
             if(isHttpRequestError(data)) {
                 const error: HttpRequestError = data as HttpRequestError;
+                window.alert(`Error!\n${error.httpErrorStatus}: ${error.message}`);
             }
             else {
                 const books: PhysicalBookDto[] =  data as PhysicalBookDto[];

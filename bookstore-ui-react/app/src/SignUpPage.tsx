@@ -37,7 +37,7 @@ export function SignUpPage(): JSX.Element {
             setCustomerDtoResponse(customerResponse);
             setResponseDisplay(
                 <div className="success-container">
-                    The user {customerResponse?.email} was successfully created! You can login now.
+                    The user {customerDtoResponse?.email} was successfully created! You can login now.
                 </div>
             );
         }
