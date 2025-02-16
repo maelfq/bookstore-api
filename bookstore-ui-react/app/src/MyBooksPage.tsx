@@ -63,9 +63,9 @@ export function MyPhysicalBookRow(bookProp: MyPhysicalBookRowProp): JSX.Element 
     const book: PhysicalBookDto = bookProp.book;
 
     function freePhysicalBook() {
-        book.customerDto = undefined;
-        console.log(book);
         
+        book.customerDto = undefined;
+
         updatePhysicalBook(book)
         .then((data: PhysicalBookDto | HttpRequestError) => {
             if(isHttpRequestError(data)) {
@@ -78,7 +78,7 @@ export function MyPhysicalBookRow(bookProp: MyPhysicalBookRowProp): JSX.Element 
             }
         });
     }
-    
+
     return (
         <div key={book.physicalBookId} className="book-list-entry">
             <div className="book-list-entry-text">

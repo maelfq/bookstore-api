@@ -160,3 +160,11 @@ div.success-container {
 .physical-book-entry:hover {
     background-color: #40424e;
 }
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+}
+.search-container > * {
+    margin: 10px;
+}
