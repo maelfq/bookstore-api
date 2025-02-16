@@ -1,0 +1,38 @@
+### DOCKERFILE
+services:
+  bookstore-database-postgres:
+    build:
+      context: ./bookstore-database
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    networks:
+      - bookstore-network
+  # bookstore-api-java:
+  #   build:
+  #     context: ./bookstore-api-java/app
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - bookstore-network
+  #   depends_on:
+  #     - bookstore-database-postgres
+
+  bookstore-ui-react:
+    build:
+      context: ./bookstore-ui-react/app
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - bookstore-network
+    # depends_on:
+    #   - bookstore-api-java
+
+networks:
+  bookstore-network:
+    driver: bridge
+

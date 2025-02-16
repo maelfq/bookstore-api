@@ -1,10 +1,10 @@
-FROM alpine/java21-jdk as developerImage
-RUN "mkdir ./app"
+FROM openjdk:21-oraclelinux8 AS develop
+RUN mkdir ./app
 COPY . ./app
 WORKDIR ./app
-RUN "./gradlew build && java -jar build/libs/gs-spring-boot-docker-0.1.0.jar"
+RUN ./gradlew build && java -jar build/libs/bookstore-api-java-0.0.1-SNAPSHOT.jar
 
-FROM alpine/java21-sdk as runtimeImage
-RUN "mkdir ./app"
+FROM openjdk:21-oraclelinux8 AS runtime
+RUN mkdir ./app
 COPY --from=develop . ./app
 ENTRYPOINT ["java","-jar","/app.jar"]
