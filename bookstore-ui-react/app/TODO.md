@@ -1,4 +1,4 @@
-- requête POST pour emprunter un livre depuis les 2 types d'écrans
-- afficher par genre les livres
-- écran avec tous les livres (BONUS: fonction recherche & bouton pour emprunter un livre depuis la page) 
-- remplacer l'écran login par un écran avec les infos quand l'utilisateur est connecté
+#Things to improve UI
+
+- resolve the loggin button display (if you're already logged in)
+- search through all the books / filter feature 
